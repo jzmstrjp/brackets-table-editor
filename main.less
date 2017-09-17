@@ -1,0 +1,146 @@
+#jzmstrjp_table_editor_dialog {
+	
+	display: inline-block;
+	width: auto;
+	//min-width: 1000px;
+	.modal-header{
+		overflow: hidden;
+	}
+	.dialog-title{
+		float: left;
+	}
+	table table{
+		opacity: 0.6;
+		display: block;
+		border-style: dotted;
+		border-width: 2px;
+		&:before{
+			font-weight: bold;
+			display: block;
+			content: 'Child Table';
+			padding: 0.5em;
+		}
+		> *{
+			display: none;
+		}
+	}
+	.ib{
+		display: inline-block;
+	}
+	button, input{
+		vertical-align: middle;
+	}
+	input[type="text"]{
+		margin: 0;
+		width: 6em;
+	}
+	.split_btn{
+		margin-right: 2em;
+	}
+	.td_btn{
+		margin-right: 2em;
+	}
+	.add_row_btn{
+		margin-right: 1em;
+	}
+	
+	thead:before{ content: 'THEAD'; }
+	tbody:before{ content: 'TBODY'; }
+	tfoot:before{ content: 'TFOOT'; }
+	caption:before{ content: 'CAPTION: '; }
+	
+	thead:before,
+	tbody:before,
+	tfoot:before{
+		padding: 0 1em;
+		border-radius: 100px;
+		display: inline-block;
+		font-weight: bold;
+		font-size: 14px;
+		background-color: #fff;
+		color: #000;
+	}
+
+
+	.modal-body {
+		max-height: 80vh;
+		text-align: center;
+		width: 100%;
+		box-sizing: border-box;
+		.modal-body-box {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+	.modal-header {
+		text-align: left;
+		h1 {
+			display: inline-block;
+		}
+		.rireki_btns{
+			float: left;
+			li{
+				font-weight: bold;
+				float: left;
+				list-style-type: none;
+			}
+		}
+		.btns {
+			float: right;
+			text-align: right;
+			li {
+				list-style-type: none;
+				display: inline-block;
+			}
+			button {
+				float: left;
+			}
+		}
+	}
+	.btn:focus {
+		border-color: #202020;
+	}
+}
+
+#jzmstrjp_table_editor_dialog_wrap {
+	table {
+		border-collapse: separate;
+		border-spacing: 5px;
+		text-align: center;
+		background-color: #0f0f0f;
+	}
+	
+	table,
+	th,
+	td {
+		border: 1px solid #fff;
+		margin: 5px;
+		color: #fff;
+	}
+	th,
+	td {
+		padding: 10px;
+		font-size: 16px;
+		position: relative;
+		/* cursor: pointer;
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.3);
+		} */
+		&[data-jzmstrjp-table-editor-selected]{
+			color: #333;
+			background-color: rgba(255, 255, 255, 0.8);
+		}
+	}
+	th {
+		font-weight: bold;
+		border-width: 2px;
+		&[data-jzmstrjp-table-editor-selected]{
+			background-color: #ffffff;
+		}
+	}
+	td{
+		border-style: dotted;
+		/* &[data-jzmstrjp-table-editor-selected]{
+		} */
+	}
+}

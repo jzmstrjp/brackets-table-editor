@@ -1,0 +1,24 @@
+{
+    "name": "jzmstrjp.table-editor",
+    "title": "Table Editor",
+    "description": "GUI table editor. Please use from 'Open Table Editor' on context menu. NEW FUNCTION → Undo & Redo.",
+    "version": "0.0.5",
+    "author": "jzmstrjp",
+    "license": "MIT",
+    "engines": {
+        "brackets": ">=1.9.0"
+    },
+    "keywords": [
+        "table", "edit", "cell", "merge", "html"
+    ],
+    "i18n": [
+        "en",
+        "ja"
+    ],
+    "package-i18n": {
+        "ja": {
+            "description": "テーブルをGUIで編集できるようになります。アンドゥ・リドゥが出来るようになりました。右クリックの「Open Table Editor」からどうぞ。",
+            "title": "テーブル編集し太郎"
+        }
+    }
+}
