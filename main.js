@@ -26,6 +26,13 @@ define(function (require, exports, module) {
 
     var dialog;
 
+    var dragMode;
+    var cell1; //最初に触れたセル
+    var leftEnd;
+    var rightEnd;
+    var topEnd;
+    var bottomEnd;
+
 
     ExtensionUtils.loadStyleSheet(module, "main.less");
 
@@ -102,9 +109,6 @@ define(function (require, exports, module) {
 
         //ダブルクリックでのテキスト編集機能を全セルに。
         forEach.call(cells, function (elm) {
-            var cell_pos = get_cell_pos(table, elm);
-            //console.log(elm);
-            //console.log(cell_pos);
             elm.addEventListener("dblclick", function(){
                 var motoHTML = document.querySelector("#" + table_wrap_id).innerHTML;
                 var changed = prompt("", this.innerHTML);
@@ -191,7 +195,65 @@ define(function (require, exports, module) {
     
 
     function splitCell(table){
-        console.log(get_cell_map(table));
+        var motoHTML = document.querySelector("#" + table_wrap_id).innerHTML;
+        var selected = table.querySelectorAll("[" + attrName + "]");
+        var changed = false;
+        
+        forEach.call(selected, function(cell){
+            split(cell);
+        });
+        function split(cell){
+            var rows = cell.rowSpan;
+            var cols = cell.colSpan;
+            var clone;
+            var cellPos;
+            var map;
+            cellPos = get_cell_pos(table, cell);
+            map = get_cell_map(table);
+            if(rows === 1 && cols === 1){
+                //alert("分割する必要なし！");
+                return;
+            }
+            changed = true;
+            cell.removeAttribute("rowspan");
+            cell.removeAttribute("colspan");
+
+            //1行目
+            for(var i = 0; i < cols - 1; i++){
+                clone = cell.cloneNode();
+                cell.parentNode.insertBefore(clone, cell.nextElementSibling);
+            }
+            
+            //2行目以降
+            //nowTable = document.querySelector("#jzmstrjp_table_editor_dialog_wrap > table");
+            for(i = 0; i < rows - 1; i++){
+                var nextRowIndex = cell.parentNode.rowIndex + i + 1;
+                var nextColIndex = cellPos.x + cols;
+                //console.log(nextRowIndex);
+                var nextCol = map[nextRowIndex][nextColIndex];
+                //console.log(nextCol);
+                //console.log(nextCol.parentNode.rowIndex);
+
+                for(var j = 0; j < cols; j++){
+                    clone = cell.cloneNode();
+                    while(nextCol && nextRowIndex !== nextCol.parentNode.rowIndex){//次のエレメントが(あって)本物じゃない間はその次に行って、本物を探す。
+                        nextColIndex++;
+                        nextCol = map[nextRowIndex][nextColIndex];
+                        //console.log(nextCol);
+                    }
+                    if(nextCol){//本物の次のセルが見つかったなら
+                        table.rows[nextRowIndex].insertBefore(clone, nextCol);
+                    }else{
+                        table.rows[nextRowIndex].appendChild(clone);
+                    }
+                }
+            }
+        }
+        selected = table.querySelectorAll("["+ attrName +"]");
+        addSelectedAttr(selected, table, {byResetButton: true});
+        if(changed){
+            rireki_make(motoHTML);
+        }
     }
 
     function to_th_or_td(table, tagName){
@@ -316,7 +378,7 @@ define(function (require, exports, module) {
             mergedHTML = selectedcell1.innerHTML;
 			forEach.call(selectedcells, function(cell, i/* , arr */){
 				if(i !== 0){
-					mergedHTML += cell.innerHTML;
+					mergedHTML = mergedHTML + ", " + cell.innerHTML;
 					cell.parentNode.removeChild(cell);
 				}
 			});
@@ -337,15 +399,13 @@ define(function (require, exports, module) {
         }
 
         //ドラッグしたらハイライト
-        var dragMode = false;
-        var cell1; //最初に触れたセル
-        var leftEnd = false;
-        var rightEnd = false;
-        var topEnd = false;
-        var bottomEnd = false;
+        dragMode = false;
+        //cell1; //最初に触れたセル
+        leftEnd = false;
+        rightEnd = false;
+        topEnd = false;
+        bottomEnd = false;
         var allCells;
-        var nowTable;
-        
 
         Array.prototype.forEach.call(cells, function (cell /* , i, arr */ ) {
             cell.addEventListener("mousedown", function () {

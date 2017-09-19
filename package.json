@@ -1,10 +1,11 @@
 {
     "name": "jzmstrjp.table-editor",
     "title": "Table Editor",
-    "description": "GUI table editor. Please use from 'Open Table Editor' on context menu. NEW FUNCTION → Undo & Redo.",
-    "version": "0.0.5",
+    "description": "GUI table editor. Please use from 'Open Table Editor' on context menu. NEW FUNCTION → Merge & Split.",
+    "version": "0.0.8",
     "author": "jzmstrjp",
     "license": "MIT",
+    "homepage": "https://github.com/jzmstrjp/brackets-table-editor",
     "engines": {
         "brackets": ">=1.9.0"
     },
@@ -17,7 +18,7 @@
     ],
     "package-i18n": {
         "ja": {
-            "description": "テーブルをGUIで編集できるようになります。アンドゥ・リドゥが出来るようになりました。右クリックの「Open Table Editor」からどうぞ。",
+            "description": "テーブルをGUIで編集できるようになります。右クリックの「Open Table Editor」からどうぞ。セルのマージと分割が出来るようになりました。",
             "title": "テーブル編集し太郎"
         }
     }
